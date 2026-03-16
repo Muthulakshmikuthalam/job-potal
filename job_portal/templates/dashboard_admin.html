@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Admin Dashboard</h2>
+
+    <div class="row mt-4">
+
+        <div class="col-md-4">
+            <div class="card bg-primary text-white p-3">
+                <h5>Total Users</h5>
+                <h2>{{ total_users }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card bg-success text-white p-3">
+                <h5>Total Jobs</h5>
+                <h2>{{ total_jobs }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card bg-danger text-white p-3">
+                <h5>Total Applications</h5>
+                <h2>{{ total_apps }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

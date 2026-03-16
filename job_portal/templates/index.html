@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Available Jobs</h2>
+
+<!-- 🔎 SEARCH & FILTER FORM -->
+<form method="GET" class="row mb-4">
+    <div class="col-md-4">
+        <input type="text" name="search" class="form-control" placeholder="Search by title">
+    </div>
+
+    <div class="col-md-3">
+        <input type="text" name="location" class="form-control" placeholder="Location">
+    </div>
+
+    <div class="col-md-3">
+        <input type="text" name="category" class="form-control" placeholder="Category">
+    </div>
+
+    <div class="col-md-2">
+        <button class="btn btn-primary w-100">Search</button>
+    </div>
+</form>
+
+{% if jobs %}
+    {% for job in jobs %}
+    <div class="card mb-3 shadow">
+        <div class="card-body">
+            <h4>{{ job.title }}</h4>
+            <p>{{ job.description }}</p>
+            <p><b>Location:</b> {{ job.location }}</p>
+            <p><b>Salary:</b> {{ job.salary }}</p>
+            <p><b>Category:</b> {{ job.category }}</p>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-info">
+        No jobs posted yet.
+    </div>
+{% endif %}
+
+{% endblock %}

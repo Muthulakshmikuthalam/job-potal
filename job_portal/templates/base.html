@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Portal</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            transition: 0.3s ease;
+        }
+
+        /* Gradient Navbar */
+        .gradient-nav {
+            background: linear-gradient(90deg, #141e30, #243b55);
+        }
+
+        /* Dark Mode */
+        .light-mode {
+            background: #f4f6f9 !important;
+            color: black !important;
+        }
+
+        .light-mode .card {
+            background: white !important;
+            color: black !important;
+        }
+
+        .light-mode .navbar {
+            background: #ffffff !important;
+        }
+    </style>
+
+</head>
+
+<body class="bg-light">
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark gradient-nav shadow">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">🚀 Job Portal</a>
+
+            <div class="d-flex align-items-center">
+
+                {% if current_user.is_authenticated %}
+
+                    <!-- Dashboard Button -->
+                    <a href="/dashboard" class="btn btn-outline-light btn-sm me-2">
+                        Dashboard
+                    </a>
+
+                    <!-- Dark Mode Toggle -->
+                    <button class="btn btn-light btn-sm me-2" onclick="toggleMode()">
+                        🌙
+                    </button>
+
+                    <!-- Profile Dropdown -->
+                    <div class="dropdown">
+                        <a class="btn btn-secondary btn-sm dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown">
+                            {{ current_user.name }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ url_for('logout') }}">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                {% else %}
+
+                    <a href="/login" class="btn btn-success btn-sm me-2">Login</a>
+                    <a href="/register" class="btn btn-warning btn-sm">Register</a>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </nav>
+
+    <!-- FLASH MESSAGES + PAGE CONTENT -->
+    <div class="container mt-4">
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Dark Mode Script -->
+    <script>
+        function toggleMode() {
+            document.body.classList.toggle("light-mode");
+        }
+    </script>
+
+    <!-- Page Specific Scripts -->
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

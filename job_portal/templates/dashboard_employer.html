@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Employer Dashboard</h2>
+
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+            <div class="card bg-info text-white p-3">
+                <h5>Total Jobs Posted</h5>
+                <h2>{{ total_jobs }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card bg-secondary text-white p-3">
+                <h5>Total Applications Received</h5>
+                <h2>{{ total_apps }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <a href="{{ url_for('post_job') }}" class="btn btn-primary">
+        Post New Job
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2>Welcome {{ current_user.name }}</h2>
+
+    <div class="row mt-4">
+
+        <div class="col-md-3">
+            <div class="card bg-primary text-white p-3">
+                <h5>Total Applications</h5>
+                <h2>{{ total }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-warning text-dark p-3">
+                <h5>Pending</h5>
+                <h2>{{ pending }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-success text-white p-3">
+                <h5>Approved</h5>
+                <h2>{{ approved }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-danger text-white p-3">
+                <h5>Rejected</h5>
+                <h2>{{ rejected }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h4>Your Applications</h4>
+
+    {% if applications %}
+        <table class="table table-bordered">
+            <tr>
+                <th>Job</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.job.title }}</td>
+                <td>{{ app.status }}</td>
+                <td>{{ app.date_applied.strftime('%d-%m-%Y') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No applications yet.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

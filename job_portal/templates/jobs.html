@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">Available Jobs</h1>
+
+    <!-- 🔎 SEARCH BAR -->
+    <form method="GET" action="/jobs" class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <input type="text"
+                   name="search"
+                   class="form-control"
+                   placeholder="Search by title"
+                   value="{{ request.args.get('search', '') }}">
+        </div>
+
+        <div class="col-md-3">
+            <input type="text"
+                   name="location"
+                   class="form-control"
+                   placeholder="Location"
+                   value="{{ request.args.get('location', '') }}">
+        </div>
+
+        <div class="col-md-3">
+            <input type="text"
+                   name="category"
+                   class="form-control"
+                   placeholder="Category"
+                   value="{{ request.args.get('category', '') }}">
+        </div>
+
+        <div class="col-md-2">
+            <button class="btn btn-primary w-100">
+                Search
+            </button>
+        </div>
+
+    </form>
+
+
+    <!-- 📌 JOB LIST -->
+    {% if jobs %}
+        {% for job in jobs %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+
+                    <h4 class="fw-bold">{{ job.title }}</h4>
+                    <p>{{ job.description }}</p>
+
+                    <p><strong>Location:</strong> {{ job.location }}</p>
+                    <p><strong>Salary:</strong> {{ job.salary }}</p>
+                    <p><strong>Category:</strong> {{ job.category }}</p>
+
+                    {% if current_user.is_authenticated and current_user.role == "jobseeker" %}
+                        <a href="/apply/{{ job.id }}" class="btn btn-success">
+                            Apply Now
+                        </a>
+                    {% endif %}
+
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">
+            No jobs found.
+        </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Welcome {{ current_user.name }}</h2>
+    <hr>
+
+    <!-- ================= JOBSEEKER DASHBOARD ================= -->
+    {% if current_user.role == 'jobseeker' %}
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card bg-primary text-white p-3">
+                    <h5>Total Applications</h5>
+                    <h2>{{ total }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card bg-warning text-dark p-3">
+                    <h5>Pending</h5>
+                    <h2>{{ pending }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card bg-success text-white p-3">
+                    <h5>Approved</h5>
+                    <h2>{{ approved }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card bg-danger text-white p-3">
+                    <h5>Rejected</h5>
+                    <h2>{{ rejected }}</h2>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h4>Your Applications</h4>
+
+        {% if applications %}
+        <table class="table table-bordered">
+            <tr>
+                <th>Job</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.job.title }}</td>
+                <td>{{ app.status }}</td>
+                <td>{{ app.date_applied.strftime('%d-%m-%Y') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No applications yet.</p>
+        {% endif %}
+
+    {% endif %}
+
+
+    <!-- ================= EMPLOYER DASHBOARD ================= -->
+    {% if current_user.role == 'employer' %}
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="card bg-info text-white p-3">
+                    <h5>Total Jobs Posted</h5>
+                    <h2>{{ total_jobs }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card bg-secondary text-white p-3">
+                    <h5>Total Applications Received</h5>
+                    <h2>{{ total_apps }}</h2>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <a href="{{ url_for('post_job') }}" class="btn btn-primary">
+            Post New Job
+        </a>
+
+    {% endif %}
+
+
+    <!-- ================= ADMIN DASHBOARD ================= -->
+    {% if current_user.role == 'admin' %}
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="card bg-primary text-white p-3">
+                    <h5>Total Users</h5>
+                    <h2>{{ total_users }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card bg-success text-white p-3">
+                    <h5>Total Jobs</h5>
+                    <h2>{{ total_jobs }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card bg-danger text-white p-3">
+                    <h5>Total Applications</h5>
+                    <h2>{{ total_apps }}</h2>
+                </div>
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

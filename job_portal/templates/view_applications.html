@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>Applicants</h3>
+
+<table class="table table-bordered">
+<tr>
+<th>User ID</th>
+<th>Resume</th>
+<th>Status</th>
+<th>E-mail</th>
+</tr>
+
+{% for app in applications %}
+<tr>
+<td>{{ app.user_id }}</td>
+<td>
+<a href="{{ url_for('static', filename='resumes/' + app.resume) }}" target="_blank">
+Download
+</a>
+</td>
+<td>{{ app.status }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
